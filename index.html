@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+  <header>
+    <h1>Contact Form</h1>
+  </header>
+
+  <div id="form">
+
+    <div class="fish" id="fish"></div>
+    <div class="fish" id="fish2"></div>
+
+    <form onsubmit="return handleSubmit(event)">
+
+      <div class="formgroup" id="name-form">
+        <label for="name">Your name*</label>
+        <input type="text" id="name" name="name" />
+      </div>
+
+      <div class="formgroup" id="email-form">
+        <label for="email">Your e-mail*</label>
+        <input type="email" id="email" name="email" />
+      </div>
+
+      <div class="formgroup" id="message-form">
+        <label for="message">Your message</label>
+        <textarea id="message" name="message"></textarea>
+      </div>
+
+      <input type="submit" value="Send your message!" />
+    </form>
+  </div>
+
+  <!-- jquery cdn -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <script src="./script.js"></script>
+
+  <!-- emailjs cdn -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function () {
+      emailjs.init("your info");
+    })();
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      const elements = event.target.elements;
+      const formData = {
+        name: elements.name.value,
+        email: elements.email.value,
+        message: elements.message.value
+      }
+
+      emailjs.send('your info', 'your info', formData)
+        .then(function (response) {
+          console.log('SUCCESS!', response.status, response.text);
+          elements.name.value = ''
+          elements.email.value = ''
+          elements.message.value = ''
+          alert("form sumbit successfully")
+        }, function (error) {
+          console.log('FAILED...', error);
+        });
+
+    }
+  </script>
+</body>
+
+</html>
